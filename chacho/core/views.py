@@ -31,3 +31,6 @@ def comando(request):
 def lista_comandos(request):
     comandos = Comando.objects.all()
     return render(request, 'core/lista_comandos.html', {'comandos': comandos})
+
+def videos(request):
+    return render(request, 'core/videos.html')

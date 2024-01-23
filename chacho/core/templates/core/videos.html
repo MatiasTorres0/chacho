@@ -161,36 +161,41 @@
         </div>
     </div>
     <!-- Header End -->
-<body>
-    <h1>Lista de Juegos</h1>
-    <!-- Agrega estos botones en tu sección de botones -->
-    <button class="filter-btn" onclick="filterByType('normal')">Normal</button>
-    <button class="filter-btn" onclick="filterByType('Moderador')">Moderador</button>
-    <button class="filter-btn" onclick="filterByType('editor de twitch')">Editor de Twitch</button>
-    <button class="filter-btn" onclick="showAll()">Todos</button>
+
+<!-- Sección de Videos -->
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Videos</h2>
+
+                </div>
+                <div class="card-body">
+                    <h4>Tutorial streamelements</h4>
+                    <!-- Embed de Video de YouTube -->
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/rs-dBMOUxO0" allowfullscreen></iframe>
+
+                    </div>
+                    <h4>Tickets discord</h4>
+                    <!-- Embed de Video de YouTube -->
+                    <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/UG-sGxmaTlk" allowfullscreen></iframe>
 
 
-    <table class="rounded">
-        <thead>
-            <tr>
-                <th>Nombre del Comando</th>
-                <th>Tipo comando</th>
-                <th>Descipción</th>
-            </tr>
-        </thead>
+                    </div>
+                    <!-- Puedes agregar más videos de la misma manera -->
+                    <!--<div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/OT1HCQcSHW0" allowfullscreen></iframe>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-            <tbody>
-                {% for comando in comandos %}
-                    <tr class="game-row" data-type="{{ comando.tipo }}">
-                        <td>{{ comando.nombre_comando }}</td>
-                        <td>{{ comando.tipo }}</td>
-                        <td>{{ comando.descripcion }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
 
-    </table>
-</body>
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-white mt-5 py-5 px-sm-3 px-md-5">
@@ -284,26 +289,18 @@
     <script src="mail/jqBootstrapValidation.min.js"></script>
     <script src="mail/contact.js"></script>
     <script>
-        function filterByType(type) {
+        function filterByMonth(month) {
             const rows = document.querySelectorAll('.game-row');
             rows.forEach(row => {
-                const rowType = row.getAttribute('data-type');
-                if (rowType === type || type === 'all') {
+                const rowMonth = row.getAttribute('data-month');
+                if (rowMonth === month || month === 'all') {
                     row.style.display = '';
                 } else {
                     row.style.display = 'none';
                 }
             });
         }
-    
-        function showAll() {
-            const rows = document.querySelectorAll('.game-row');
-            rows.forEach(row => {
-                row.style.display = '';
-            });
-        }
     </script>
-    
     <!-- Template Javascript -->
     <script src="{% load static %}js/main.js"></script>
 </body>
