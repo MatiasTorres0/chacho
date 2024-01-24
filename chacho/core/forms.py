@@ -16,7 +16,9 @@ class ComandoForm(forms.ModelForm):
     class Meta:
         model = Comando
         fields = [
-            'nombre_comando', 'tipo', 'descripcion'
+            'nombre_comando', 'tipo', 'descripcion', 'canal'
         ]
 
+class ExcelUploadForm(forms.Form):
+    excel_file = forms.FileField()
 

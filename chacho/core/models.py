@@ -46,6 +46,15 @@ class Comando(models.Model):
         ('moderador', 'Moderador'),
         ('editor de twitch', 'Editor de Twitch'),
     ]
+    CANAL = [
+        ('chachoyvt', 'ChachoyVT'),
+    ]
     nombre_comando = models.CharField(max_length=50, default='')
     tipo = models.CharField(max_length=50, choices=TIPO_COMANDO)
     descripcion = models.CharField(max_length=500, default='')
+    canal = models.CharField(max_length=50, choices=CANAL, default='chachoyvt')  # Selecciona un valor predeterminado adecuado
+
+    def __str__(self):
+        return self.nombre_comando
+
+

@@ -14,7 +14,8 @@
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -41,7 +42,8 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #ddd;
             padding: 12px;
             text-align: left;
@@ -142,7 +144,7 @@
                             <a href="{% url 'comando' %}" class="nav-item nav-link">Formulario comandos</a>
                             <a href="{% url 'lista_comandos' %}" class="nav-item nav-link">Listado de Comandos</a>
                             <a href="{% url 'videos' %}" class="nav-item nav-link">Tutoriales</a>
-
+                            <a href="{% url 'upload_excel' %}" class="nav-item nav-link">Subir excel comandos</a>
                             <!--<a href="{% url 'home' %}" class="nav-item nav-link active">Pronto</a>
                             <a href="service.html" class="nav-item nav-link">Service</a>
                             <a href="project.html" class="nav-item nav-link">Project</a>
@@ -157,49 +159,55 @@
                             {% if user.is_authenticated %}
 
                             <a href="#" class="nav-item nav-link">{{ user.username}}</a>
-    
-                        {% endif %}
+
+                            {% endif %}
                         </div>
 
                     </div>
                     <a href="{% url 'login' %}" class="btn btn-primary mr-3 d-none d-lg-block">Login</a>
 
-                    </div>
-                </nav>
             </div>
+            </nav>
         </div>
     </div>
+    </div>
     <!-- Header End -->
-<body>
-    <h1>Lista de Juegos</h1>
-    <!-- Agrega estos botones en tu sección de botones -->
-    <button class="filter-btn" onclick="filterByType('normal')">Normal</button>
-    <button class="filter-btn" onclick="filterByType('Moderador')">Moderador</button>
-    <button class="filter-btn" onclick="filterByType('editor de twitch')">Editor de Twitch</button>
-    <button class="filter-btn" onclick="showAll()">Todos</button>
 
+    <body>
+        <h1>Lista de Comandos</h1>
+        <!-- Agrega estos botones en tu sección de botones -->
+        <button class="filter-btn" onclick="filterByType('normal')">Normal</button>
+        <button class="filter-btn" onclick="filterByType('Moderador')">Moderador</button>
+        <button class="filter-btn" onclick="filterByType('editor de twitch')">Editor de Twitch</button>
+        <button class="filter-btn" onclick="showAll()">Todos</button>
 
-    <table class="rounded">
-        <thead>
-            <tr>
-                <th>Nombre del Comando</th>
-                <th>Tipo comando</th>
-                <th>Descipción</th>
-            </tr>
-        </thead>
+        <button class="filter-btn" onclick="filterByChannel('chachoyvt')">ChachoyVT</button>
+        <!-- Agrega botones para otros canales si es necesario -->
+        <button class="filter-btn" onclick="showAllChannels()">Todos los Canales</button>
+
+        <table class="rounded">
+            <thead>
+                <tr>
+                    <th>Nombre del Comando</th>
+                    <th>Tipo comando</th>
+                    <th>Descipción</th>
+                    <th>Canal</th>
+                </tr>
+            </thead>
 
             <tbody>
                 {% for comando in comandos %}
-                    <tr class="game-row" data-type="{{ comando.tipo }}">
-                        <td>{{ comando.nombre_comando }}</td>
-                        <td>{{ comando.tipo }}</td>
-                        <td>{{ comando.descripcion }}</td>
-                    </tr>
+                <tr class="game-row" data-type="{{ comando.tipo }}" data-channel="{{ comando.canal }}">
+                    <td>{{ comando.nombre_comando }}</td>
+                    <td>{{ comando.tipo }}</td>
+                    <td>{{ comando.descripcion }}</td>
+                    <td>{{ comando.canal }}</td>
+                </tr>
                 {% endfor %}
             </tbody>
 
-    </table>
-</body>
+        </table>
+    </body>
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-white mt-5 py-5 px-sm-3 px-md-5">
@@ -237,10 +245,12 @@
             </div>
             <div class="col-lg-3 col-md-6 mb-5">
                 <h4 class="font-weight-semi-bold text-primary mb-4">Newsletter</h4>
-                <p>Rebum labore lorem dolores kasd est, et ipsum amet et at kasd, ipsum sea tempor magna tempor. Accu kasd sed ea duo ipsum.</p>
+                <p>Rebum labore lorem dolores kasd est, et ipsum amet et at kasd, ipsum sea tempor magna tempor. Accu
+                    kasd sed ea duo ipsum.</p>
                 <div class="w-100">
                     <div class="input-group">
-                        <input type="text" class="form-control border-0" style="padding: 25px;" placeholder="Your Email">
+                        <input type="text" class="form-control border-0" style="padding: 25px;"
+                            placeholder="Your Email">
                         <div class="input-group-append">
                             <button class="btn btn-primary px-4">Sign Up</button>
                         </div>
@@ -249,10 +259,12 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid bg-dark text-white border-top py-4 px-sm-3 px-md-5" style="border-color: #3E3E4E !important;">
+    <div class="container-fluid bg-dark text-white border-top py-4 px-sm-3 px-md-5"
+        style="border-color: #3E3E4E !important;">
         <div class="row">
             <div class="col-lg-6 text-center text-md-left mb-3 mb-md-0">
-                <p class="m-0 text-white">&copy; <a href="#">PoiYuTe</a>. Diseñado por mi <a href="{% url 'formulario' %}"></a>
+                <p class="m-0 text-white">&copy; <a href="#">PoiYuTe</a>. Diseñado por mi <a
+                        href="{% url 'formulario' %}"></a>
                 </p>
             </div>
             <!--<div class="col-lg-6 text-center text-md-right">
@@ -304,7 +316,7 @@
                 }
             });
         }
-    
+
         function showAll() {
             const rows = document.querySelectorAll('.game-row');
             rows.forEach(row => {
@@ -312,7 +324,27 @@
             });
         }
     </script>
-    
+<script>
+    function filterByChannel(channel) {
+        const rows = document.querySelectorAll('.game-row');
+        rows.forEach(row => {
+            const rowChannel = row.getAttribute('data-type');  // Cambiado a 'data-type'
+            if (rowChannel === channel || channel === 'all') {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    function showAllChannels() {
+        const rows = document.querySelectorAll('.game-row');
+        rows.forEach(row => {
+            row.style.display = '';
+        });
+    }
+</script>
+
     <!-- Template Javascript -->
     <script src="{% load static %}js/main.js"></script>
 </body>
