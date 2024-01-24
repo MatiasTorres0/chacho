@@ -142,6 +142,7 @@
                             <a href="{% url 'comando' %}" class="nav-item nav-link">Formulario comandos</a>
                             <a href="{% url 'lista_comandos' %}" class="nav-item nav-link">Listado de Comandos</a>
                             <a href="{% url 'videos' %}" class="nav-item nav-link">Tutoriales</a>
+
                             <!--<a href="{% url 'home' %}" class="nav-item nav-link active">Pronto</a>
                             <a href="service.html" class="nav-item nav-link">Service</a>
                             <a href="project.html" class="nav-item nav-link">Project</a>
@@ -153,8 +154,16 @@
                                 </div>
                             </div>
                             <a href="contact.html" class="nav-item nav-link">Contact</a>-->
+                            {% if user.is_authenticated %}
+
+                            <a href="#" class="nav-item nav-link">{{ user.username}}</a>
+    
+                        {% endif %}
                         </div>
-                        <a href="" class="btn btn-primary mr-3 d-none d-lg-block">Get A Quote</a>
+
+                    </div>
+                    <a href="{% url 'login' %}" class="btn btn-primary mr-3 d-none d-lg-block">Login</a>
+
                     </div>
                 </nav>
             </div>

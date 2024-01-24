@@ -18,3 +18,5 @@ class ComandoForm(forms.ModelForm):
         fields = [
             'nombre_comando', 'tipo', 'descripcion'
         ]
+
+

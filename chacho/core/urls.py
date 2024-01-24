@@ -8,4 +8,5 @@ urlpatterns = [
     path('comando/', comando, name="comando"),
     path('lista_comandos', lista_comandos, name="lista_comandos"),
     path('videos', videos, name="videos"),
+
 ]

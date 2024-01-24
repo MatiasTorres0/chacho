@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from .forms import JuegoModForm, ComandoForm
 from .models import JuegoMod, Comando
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def home(request):
     return render(request, 'core/about.html')
-
+@login_required
 def formulario(request):
     data = {"form": JuegoModForm()}
     if request.method == 'POST':
@@ -18,7 +19,7 @@ def lista_juegos(request):
     juegos = JuegoMod.objects.all()
     return render(request, 'core/lista_juegos.html', {'juegos': juegos})
 
-
+@login_required
 def comando(request):
     data = {"form": ComandoForm()}
     if request.method == 'POST':
@@ -31,6 +32,6 @@ def comando(request):
 def lista_comandos(request):
     comandos = Comando.objects.all()
     return render(request, 'core/lista_comandos.html', {'comandos': comandos})
-
+@login_required
 def videos(request):
     return render(request, 'core/videos.html')
