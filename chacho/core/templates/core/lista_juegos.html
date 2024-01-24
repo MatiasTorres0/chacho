@@ -14,7 +14,8 @@
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -41,7 +42,8 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #ddd;
             padding: 12px;
             text-align: left;
@@ -137,12 +139,25 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
+                            {% if user.is_authenticated %}
                             <a href="{% url 'formulario' %}" class="nav-item nav-link">Formulario Juego</a>
+                            {% endif %}
                             <a href="{% url 'lista_juegos' %}" class="nav-item nav-link">Listado de Juegos</a>
+                            {% if user.is_authenticated %}
                             <a href="{% url 'comando' %}" class="nav-item nav-link">Formulario comandos</a>
+                            {% endif %}
                             <a href="{% url 'lista_comandos' %}" class="nav-item nav-link">Listado de Comandos</a>
+                            {% if user.is_authenticated %}
                             <a href="{% url 'videos' %}" class="nav-item nav-link">Tutoriales</a>
+                            <a href="{% url 'upload_excel' %}" class="nav-item nav-link">Subir excel comandos</a>
 
+                            {% endif %}
+                            {% if user.is_authenticated %}
+                            <a href="#" class="nav-item nav-link" onclick="document.getElementById('logout-form').submit()">Cerrar sesión</a>
+                            <form id="logout-form" method="post" action="{% url 'logout' %}" style="display: none;">
+                                {% csrf_token %}
+                            </form>
+                            {% endif %}
                             <!--<a href="{% url 'home' %}" class="nav-item nav-link active">Pronto</a>
                             <a href="service.html" class="nav-item nav-link">Service</a>
                             <a href="project.html" class="nav-item nav-link">Project</a>
@@ -157,56 +172,58 @@
                             {% if user.is_authenticated %}
 
                             <a href="#" class="nav-item nav-link">{{ user.username}}</a>
-    
-                        {% endif %}
+
+                            
+                            {% endif %}
                         </div>
 
                     </div>
                     <a href="{% url 'login' %}" class="btn btn-primary mr-3 d-none d-lg-block">Login</a>
 
-                    </div>
-                </nav>
             </div>
+            </nav>
         </div>
     </div>
+    </div>
     <!-- Header End -->
-<body>
-    <h1>Lista de Juegos</h1>
-    <button class="filter-btn" onclick="filterByMonth('enero')">Enero</button>
-    <button class="filter-btn" onclick="filterByMonth('febrero')">Febrero</button>
-    <button class="filter-btn" onclick="filterByMonth('marzo')">Marzo</button>
-    <button class="filter-btn" onclick="filterByMonth('abril')">Abril</button>
-    <button class="filter-btn" onclick="filterByMonth('mayo')">Mayo</button>
-    <button class="filter-btn" onclick="filterByMonth('junio')">Junio</button>
-    <button class="filter-btn" onclick="filterByMonth('julio')">Julio</button>
-    <button class="filter-btn" onclick="filterByMonth('agosto')">Agosto</button>
-    <button class="filter-btn" onclick="filterByMonth('septiembre')">Septiembre</button>
-    <button class="filter-btn" onclick="filterByMonth('octubre')">Octubre</button>
-    <button class="filter-btn" onclick="filterByMonth('noviembre')">Noviembre</button>
-    <button class="filter-btn" onclick="filterByMonth('diciembre')">Diciembre</button>
+
+    <body>
+        <h1>Lista de Juegos</h1>
+        <button class="filter-btn" onclick="filterByMonth('enero')">Enero</button>
+        <button class="filter-btn" onclick="filterByMonth('febrero')">Febrero</button>
+        <button class="filter-btn" onclick="filterByMonth('marzo')">Marzo</button>
+        <button class="filter-btn" onclick="filterByMonth('abril')">Abril</button>
+        <button class="filter-btn" onclick="filterByMonth('mayo')">Mayo</button>
+        <button class="filter-btn" onclick="filterByMonth('junio')">Junio</button>
+        <button class="filter-btn" onclick="filterByMonth('julio')">Julio</button>
+        <button class="filter-btn" onclick="filterByMonth('agosto')">Agosto</button>
+        <button class="filter-btn" onclick="filterByMonth('septiembre')">Septiembre</button>
+        <button class="filter-btn" onclick="filterByMonth('octubre')">Octubre</button>
+        <button class="filter-btn" onclick="filterByMonth('noviembre')">Noviembre</button>
+        <button class="filter-btn" onclick="filterByMonth('diciembre')">Diciembre</button>
 
 
-    <table class="rounded">
-        <thead>
-            <tr>
-                <th>Nombre del Juego</th>
-                <th>Mes</th>
-                <th>Nombre del Mod</th>
-                <th>Estado del juego</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for juego in juegos %}
+        <table class="rounded">
+            <thead>
+                <tr>
+                    <th>Nombre del Juego</th>
+                    <th>Mes</th>
+                    <th>Nombre del Mod</th>
+                    <th>Estado del juego</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for juego in juegos %}
                 <tr class="game-row" data-month="{{ juego.mes }}">
                     <td>{{ juego.nombre_juego }}</td>
                     <td>{{ juego.mes }}</td>
                     <td>{{ juego.nombre_mod }}</td>
                     <td>{{ juego.estado }}</td>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-white mt-5 py-5 px-sm-3 px-md-5">
@@ -244,10 +261,12 @@
             </div>
             <div class="col-lg-3 col-md-6 mb-5">
                 <h4 class="font-weight-semi-bold text-primary mb-4">Newsletter</h4>
-                <p>Rebum labore lorem dolores kasd est, et ipsum amet et at kasd, ipsum sea tempor magna tempor. Accu kasd sed ea duo ipsum.</p>
+                <p>Rebum labore lorem dolores kasd est, et ipsum amet et at kasd, ipsum sea tempor magna tempor. Accu
+                    kasd sed ea duo ipsum.</p>
                 <div class="w-100">
                     <div class="input-group">
-                        <input type="text" class="form-control border-0" style="padding: 25px;" placeholder="Your Email">
+                        <input type="text" class="form-control border-0" style="padding: 25px;"
+                            placeholder="Your Email">
                         <div class="input-group-append">
                             <button class="btn btn-primary px-4">Sign Up</button>
                         </div>
@@ -256,10 +275,12 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid bg-dark text-white border-top py-4 px-sm-3 px-md-5" style="border-color: #3E3E4E !important;">
+    <div class="container-fluid bg-dark text-white border-top py-4 px-sm-3 px-md-5"
+        style="border-color: #3E3E4E !important;">
         <div class="row">
             <div class="col-lg-6 text-center text-md-left mb-3 mb-md-0">
-                <p class="m-0 text-white">&copy; <a href="#">PoiYuTe</a>. Diseñado por mi <a href="{% url 'formulario' %}"></a>
+                <p class="m-0 text-white">&copy; <a href="#">PoiYuTe</a>. Diseñado por mi <a
+                        href="{% url 'formulario' %}"></a>
                 </p>
             </div>
             <!--<div class="col-lg-6 text-center text-md-right">
@@ -313,6 +334,7 @@
         }
     </script>
     <!-- Template Javascript -->
+
     <script src="{% load static %}js/main.js"></script>
 </body>
 

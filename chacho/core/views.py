@@ -6,7 +6,7 @@ import pandas as pd
 from django.shortcuts import render, redirect
 from .forms import ExcelUploadForm
 from .models import Comando
-
+from django.contrib.auth import logout
 # Create your views here.
 def home(request):
     return render(request, 'core/about.html')
@@ -64,3 +64,10 @@ def upload_excel(request):
         form = ExcelUploadForm()
 
     return render(request, 'core/upload_excel.html', {'form': form})
+
+def speedtest(request):
+    return render(request, 'core/speedtest.html')
+
+def custom_logout(request):
+    logout(request)
+    return redirect('core/lista_comandos.html')

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speed Test</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #results {
+            margin-top: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Speed Test</h1>
+
+    <button onclick="runSpeedTest()">Run Speed Test</button>
+
+    <div id="results">
+        <p id="ping">Ping: N/A</p>
+        <p id="download">Download Speed: N/A</p>
+        <p id="upload">Upload Speed: N/A</p>
+        <p id="resolution">Recommended Max Resolution for Twitch: N/A</p>
+    </div>
+
+    <script>
+        async function runSpeedTest() {
+            document.getElementById('results').innerHTML = '<p>Running speed test...</p>';
+
+            const startTime = new Date().getTime();
+
+            try {
+                // Simular una solicitud de descarga a JSONPlaceholder
+                await fetch('https://jsonplaceholder.typicode.com/photos/1');
+
+                // Mide durante al menos 10 segundos
+                while ((new Date().getTime() - startTime) < 10000) {
+                    // Haciendo cálculos simulados para mantener activo el bucle
+                    const dummyCalculation = 1 + 1;
+                }
+
+                const downloadTime = new Date().getTime() - startTime;
+                const downloadSpeed = calculateSpeed(downloadTime);
+
+                // Simular una solicitud de carga a JSONPlaceholder
+                await fetch('https://jsonplaceholder.typicode.com/posts', { method: 'POST' });
+
+                const uploadTime = new Date().getTime() - startTime;
+                const uploadSpeed = calculateSpeed(uploadTime);
+
+                const ping = calculatePing();
+                const recommendedResolution = calculateRecommendedResolution(downloadSpeed);
+
+                // Mostrar resultados
+                document.getElementById('results').innerHTML = `
+                    <p id="ping">Ping: ${ping} ms</p>
+                    <p id="download">Download Speed: ${downloadSpeed} Mbps</p>
+                    <p id="upload">Upload Speed: ${uploadSpeed} Mbps</p>
+                    <p id="resolution">Recommended Max Resolution for Twitch: ${recommendedResolution}</p>
+                `;
+            } catch (error) {
+                console.error('Error during speed test:', error);
+                document.getElementById('results').innerHTML = '<p>Error during speed test. Please try again.</p>';
+            }
+        }
+
+        function calculateSpeed(time) {
+            // Simular cálculo de velocidad en Mbps
+            return (10 / (time / 1000)).toFixed(2);
+        }
+
+        function calculatePing() {
+            // Simular cálculo de ping en milisegundos
+            return Math.floor(Math.random() * 100);
+        }
+
+        function calculateRecommendedResolution(downloadSpeed) {
+            if (downloadSpeed > 5) {
+                return '1080p';
+            } else if (downloadSpeed > 2) {
+                return '720p';
+            } else {
+                return '480p';
+            }
+        }
+    </script>
+</body>
+</html>
