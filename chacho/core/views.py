@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .forms import JuegoModForm, ComandoForm
-from .models import JuegoMod, Comando
+from .forms import JuegoModForm, ComandoForm, TicketForm
+from .models import JuegoMod, Comando, Ticket
 from django.contrib.auth.decorators import login_required
 import pandas as pd
 from django.shortcuts import render, redirect
@@ -71,3 +71,25 @@ def speedtest(request):
 def custom_logout(request):
     logout(request)
     return redirect('core/lista_comandos.html')
+
+
+
+def ticket_list(request):
+    tickets = Ticket.objects.all()
+    return render(request, 'core/ticket_list.html', {'tickets': tickets})
+
+def ticket_detail(request, ticket_id):
+    ticket = Ticket.objects.get(id=ticket_id)
+    return render(request, 'core/ticket_detail.html', {'ticket': ticket})
+
+def create_ticket(request):
+    if request.method == 'POST':
+        form = TicketForm(request.POST)
+        if form.is_valid():
+            ticket = form.save(commit=False)
+            ticket.usuario = request.user
+            ticket.save()
+            return redirect('core/ticket_list.html')
+    else:
+        form = TicketForm()
+    return render(request, 'core/create_ticket.html', {'form': form})

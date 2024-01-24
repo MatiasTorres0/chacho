@@ -3,6 +3,8 @@ from django.forms import ModelForm
 from .models import JuegoMod, Comando
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django import forms
+from .models import Ticket
 
 class JuegoModForm(forms.ModelForm):
     class Meta:
@@ -22,3 +24,18 @@ class ComandoForm(forms.ModelForm):
 class ExcelUploadForm(forms.Form):
     excel_file = forms.FileField()
 
+
+class TicketForm(forms.ModelForm):
+    class Meta:
+        model = Ticket
+        fields = ['asunto', 'descripcion', 'prioridad']
+
+    widgets = {
+        'prioridad': forms.Select(),
+    }
+
+    def clean_descripcion(self):
+        descripcion = self.cleaned_data['descripcion']
+        if len(descripcion) < 10:
+            raise forms.ValidationError('La descripción debe tener al menos 10 caracteres.')
+        return descripcion

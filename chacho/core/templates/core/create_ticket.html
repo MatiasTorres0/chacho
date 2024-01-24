@@ -121,32 +121,17 @@
         </div>
     </div>
     <!-- Header End -->
+<!-- templates/tickets/create_ticket.html -->
 
+<h2>Crear Nuevo Ticket</h2>
 
-    <body>
-        <!-- Formulario de Juego Mod -->
-        <div class="container">
-            <div class="row justify-content-center mt-5">
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Formulario de Comandos</h2>
-                        </div>
-                        <div class="card-body">
-                            <form action="" method="POST">
-                                {% csrf_token %}
-                                <table>
-                                    {{ form.as_table }}
-                                </table>
-                                <input type="reset" value="Limpiar">
-                                <input type="submit" value="Guardar">
-                            </form>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" href="{% url 'ticket_list' %}">Crear Ticket</button>
+</form>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<a href="{% url 'ticket_list' %}">Volver a la Lista de Tickets</a>
 
         <!-- Footer Start -->
         <div class="container-fluid bg-dark text-white mt-5 py-5 px-sm-3 px-md-5">

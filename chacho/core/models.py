@@ -1,6 +1,6 @@
 # in your models.py
 from django.db import models
-
+from django.contrib.auth.models import User
 class JuegoMod(models.Model):
     MES_CHOICES = [
         ('enero', 'Enero'),
@@ -58,3 +58,13 @@ class Comando(models.Model):
         return self.nombre_comando
 
 
+class Ticket(models.Model):
+    asunto = models.CharField(max_length=255)
+    descripcion = models.TextField()
+    estado = models.CharField(max_length=20, default='Abierto')
+    prioridad = models.CharField(max_length=20, default='Normal')
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.asunto
