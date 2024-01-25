@@ -28,11 +28,10 @@ class ExcelUploadForm(forms.Form):
 class TicketForm(forms.ModelForm):
     class Meta:
         model = Ticket
-        fields = ['asunto', 'descripcion', 'prioridad']
+        fields = ['asunto', 'descripcion']
 
-    widgets = {
-        'prioridad': forms.Select(),
-    }
+
+    
 
     def clean_descripcion(self):
         descripcion = self.cleaned_data['descripcion']

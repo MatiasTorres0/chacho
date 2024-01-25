@@ -59,12 +59,12 @@ class Comando(models.Model):
 
 
 class Ticket(models.Model):
-    asunto = models.CharField(max_length=255)
+    asunto = models.CharField(max_length=1000)
     descripcion = models.TextField()
     estado = models.CharField(max_length=20, default='Abierto')
     prioridad = models.CharField(max_length=20, default='Normal')
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-
+    respuesta = models.TextField(default='', blank=True, null=True, max_length=1000)
     def __str__(self):
         return self.asunto
