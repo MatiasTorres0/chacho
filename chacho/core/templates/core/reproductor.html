@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Editor de video</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.12.4/video-js.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.12.4/video.min.js"></script>
+  <style>
+    #editor {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #timeline {
+      width: 80%;
+      margin-top: 20px;
+    }
+
+    #clips {
+      display: flex;
+    }
+
+    .clip {
+      border: 1px solid #ccc;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    .clip.selected {
+      border-color: #007bff;
+    }
+  </style>
+</head>
+<body>
+  <div id="editor">
+    <div id="timeline">
+      <div id="clips"></div>
+    </div>
+    <div id="controls">
+      <button id="play">Reproducir</button>
+      <button id="stop">Detener</button>
+      <button id="trim">Recortar</button>
+      <button id="split">Dividir</button>
+      <button id="rotate">Rotar</button>
+      <input type="file" id="music" />
+      <button id="delete">Eliminar Clip</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const editor = document.querySelector('#editor');
+      const timeline = document.querySelector('#timeline');
+      const clipsContainer = document.querySelector('#clips');
+      const controls = document.querySelector('#controls');
+
+      const player = videojs('clips', {
+        controls: true,
+        playbackRates: [0.5, 1, 1.5, 2],
+      });
+
+      controls.addEventListener("click", (event) => {
+  const selectedClip = document.querySelector(".clip.selected");
+
+  if (event.target.id === "play") {
+    player.play();
+  } else if (event.target.id === "stop") {
+    player.pause();
+  } else if (event.target.id === "trim" && selectedClip) {
+    const start = selectedClip.dataset.start;
+    const end = selectedClip.dataset.end;
+
+    if (start !== undefined && end !== undefined) {
+      player.currentTime(start);
+      player.play();
+      setTimeout(() => {
+        player.pause();
+        player.currentTime(end);
+      }, (end - start) * 1000);
+
+      player.duration = end - start;
+    }
+  } else if (event.target.id === "split" && selectedClip) {
+    const start = selectedClip.dataset.start;
+    const middle = start + (selectedClip.dataset.end - start) / 2;
+
+    if (start !== undefined && middle !== undefined) {
+      selectedClip.dataset.end = middle;
+      const newClip = createClipElement(middle, selectedClip.dataset.end);
+      clipsContainer.appendChild(newClip);
+    }
+  } else if (event.target.id === "rotate" && selectedClip) {
+    const rotation = selectedClip.dataset.rotation;
+
+    if (rotation !== undefined) {
+      rotation = parseInt(rotation, 10);
+
+      if (rotation >= 0 && rotation <= 360) {
+        selectedClip.style.transform = `rotate(${rotation}deg)`;
+      }
+    }
+  } else if (event.target.id === "delete" && selectedClip) {
+    selectedClip.remove();
+  }
+});
+
+
+        clipsContainer.addEventListener("click", (event) => {
+          clipsContainer.querySelectorAll(".clip.selected").forEach((clip) => {
+            clip.classList.remove("selected");
+          });
+
+          if (event.target.classList.contains("clip")) {
+            event.target.classList.add("selected");
+          }
+        });
+
+        function createClipElement(start, end) {
+          if (start >= 0 && end > start) {
+            const clip = document.createElement("div");
+            clip.classList.add("clip");
+            clip.dataset.start = start;
+            clip.dataset.end = end;
+            clip.style.width = `${(end - start) * 100}px`;
+
+            const label = document.createElement("span");
+            label.textContent = `${start.toFixed(2)}s - ${end.toFixed(2)}s`;
+            clip.appendChild(label);
+
+            return clip;
+          } else {
+            return null;
+          }
+        }
+
+        // Añadir un clip de ejemplo al cargar la página
+        const initialClip = createClipElement(0, 5);
+        clipsContainer.appendChild(initialClip);
+      });
+    </script>
+  </body>
+</html>

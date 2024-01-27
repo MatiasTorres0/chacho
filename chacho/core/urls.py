@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, formulario, lista_juegos, comando, lista_comandos, videos, upload_excel, speedtest, ticket_list, ticket_detail, create_ticket
+from .views import home, formulario,equipo, lista_juegos, comando, lista_comandos, videos, upload_excel, speedtest, ticket_list, ticket_detail, create_ticket
 from .views import custom_logout
 urlpatterns = [
     path('home', home, name="home"),
@@ -14,4 +14,5 @@ urlpatterns = [
     path('tickets/', ticket_list, name='ticket_list'),
     path('tickets/<int:ticket_id>/', ticket_detail, name='ticket_detail'),
     path('tickets/create/', create_ticket, name='create_ticket'),
+    path('equipo', equipo, name='equipo'),
 ]

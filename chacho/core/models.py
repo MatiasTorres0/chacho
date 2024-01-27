@@ -1,6 +1,39 @@
 # in your models.py
 from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+from uuid import uuid4
+from django.db import models
+
+class Seccion(models.Model):
+    nombre = models.CharField(max_length=50)
+
+
+class Equipo(models.Model):
+    nombre_twitch = models.CharField(max_length=50, default='')
+    nombre_equipo = models.CharField(max_length=100, default='')
+    imagen_logo = models.ImageField(upload_to='ruta/del/directorio/', blank=True, null=True)
+    seccion = models.ForeignKey(Seccion, on_delete=models.CASCADE, null=True, blank=True)
+
+class Tactica(models.Model):
+    nombre = models.CharField(max_length=50)
+    descripcion = models.TextField()
+    equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
+
+class Formacion(models.Model):
+    nombre = models.CharField(max_length=50)
+    descripcion = models.TextField()
+    equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
+
+class Alineacion(models.Model):
+    nombre = models.CharField(max_length=50)
+    descripcion = models.TextField()
+    equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
+
+class Personaje(models.Model):
+    nombre = models.CharField(max_length=50)
+    descripcion = models.TextField()
+    equipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
 class JuegoMod(models.Model):
     MES_CHOICES = [
         ('enero', 'Enero'),
@@ -68,3 +101,5 @@ class Ticket(models.Model):
     respuesta = models.TextField(default='', blank=True, null=True, max_length=1000)
     def __str__(self):
         return self.asunto
+
+
