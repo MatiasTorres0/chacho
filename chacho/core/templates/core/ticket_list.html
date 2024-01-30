@@ -186,7 +186,18 @@
                             {% endif %}
                             
                             <!-- Listado de Juegos -->
-                            <a href="{% url 'lista_juegos' %}" class="nav-item nav-link">Listado de Juegos</a>
+                            <a href="#" class="nav-item nav-link"> Menú general</a>
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a href="{% url 'equipo' %}" class="dropdown-item">Crear tú equipo Chachos League</a>
+                                    <a href="{% url 'lista_juegos' %}" class="dropdown-item">Listado de Juegos</a>
+                                    <a href="{% url 'lista_comandos' %}" class="dropdown-item">Listado de Comandos</a>
+                            </div>
+                        </div>
+
                             
                             <!-- Formulario Comandos (Dropdown) -->
                             {% if user.is_authenticated %}
@@ -202,7 +213,7 @@
                             {% endif %}
                             
                             <!-- Listado de Comandos -->
-                            <a href="{% url 'lista_comandos' %}" class="nav-item nav-link">Listado de Comandos</a>
+
                             
                             <!-- Tutoriales -->
                             {% if user.is_authenticated %}

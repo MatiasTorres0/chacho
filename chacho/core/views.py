@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 import pandas as pd
-from .forms import JuegoModForm, ComandoForm, ExcelUploadForm, TicketForm, EquipoForm
+from .forms import JuegoModForm, ComandoForm, ExcelUploadForm, TicketForm
 from .models import JuegoMod, Comando, Ticket
 from django.contrib.auth import logout
+from .forms import JugadorForm
+from .forms import JuegoModForm
 
 def home(request):
     return render(request, 'core/about.html')
@@ -82,52 +84,18 @@ def create_ticket(request):
         return redirect('ticket_list')
 
     return render(request, 'core/create_ticket.html', {'form': form})
+from django.shortcuts import render, redirect
+from .forms import JugadorForm
+from .models import Jugador
 
-
-@login_required
-def equipo(request):
+def crear_jugador(request):
     if request.method == 'POST':
-        equipo_form = EquipoForm(request.POST, request.FILES)
-        tactica_formset = TacticaFormSet(request.POST, prefix='tacticas')
-        formacion_formset = FormacionFormSet(request.POST, prefix='formaciones')
-        alineacion_formset = AlineacionFormSet(request.POST, prefix='alineaciones')
-        personaje_formset = PersonajeFormSet(request.POST, prefix='personajes')
-
-        if equipo_form.is_valid() and tactica_formset.is_valid() and formacion_formset.is_valid() and alineacion_formset.is_valid() and personaje_formset.is_valid():
-            equipo = equipo_form.save()
-
-            for tactica_form in tactica_formset:
-                tactica = tactica_form.save(commit=False)
-                tactica.equipo = equipo
-                tactica.save()
-
-            for formacion_form in formacion_formset:
-                formacion = formacion_form.save(commit=False)
-                formacion.equipo = equipo
-                formacion.save()
-
-            for alineacion_form in alineacion_formset:
-                alineacion = alineacion_form.save(commit=False)
-                alineacion.equipo = equipo
-                alineacion.save()
-
-            for personaje_form in personaje_formset:
-                personaje = personaje_form.save(commit=False)
-                personaje.equipo = equipo
-                personaje.save()
-
-            return redirect('lista_comandos')
+        form = JugadorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Puedes agregar lógica adicional después de guardar el formulario
+            return redirect('lista_juegos')  # Cambia 'nombre_de_tu_url' con la URL a la que deseas redirigir
     else:
-        equipo_form = EquipoForm()
-        tactica_formset = TacticaFormSet(prefix='tacticas')
-        formacion_formset = FormacionFormSet(prefix='formaciones')
-        alineacion_formset = AlineacionFormSet(prefix='alineaciones')
-        personaje_formset = PersonajeFormSet(prefix='personajes')
+        form = JugadorForm()
 
-    return render(request, "core/equiposformulario.html", {
-        'equipo_form': equipo_form,
-        'tactica_formset': tactica_formset,
-        'formacion_formset': formacion_formset,
-        'alineacion_formset': alineacion_formset,
-        'personaje_formset': personaje_formset,
-    })
+    return render(request, 'core/equiposformulario.html', {'form': form})
